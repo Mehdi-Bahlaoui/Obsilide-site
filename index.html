@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obsilide — handwriting that links</title>
+<meta name="description" content="A handwriting-first notebook for Android. Circle a word you wrote and it becomes a link to a new note. Low-latency ink, plain files on your device, no account.">
+<link rel="canonical" href="https://obsilide.com/">
+<meta name="theme-color" content="#fdfdfe">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://obsilide.com/">
+<meta property="og:site_name" content="Obsilide">
+<meta property="og:title" content="Obsilide — handwriting that links">
+<meta property="og:description" content="Circle a word you wrote and it becomes a link to a new note. A handwriting-first notebook for Android.">
+<meta property="og:image" content="https://obsilide.com/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Obsilide — handwriting that links">
+<meta name="twitter:description" content="Circle a word you wrote and it becomes a link to a new note. A handwriting-first notebook for Android.">
+<meta name="twitter:image" content="https://obsilide.com/og.jpg">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --paper:#fdfdfe;
+  --paper-2:#f5f7fc;
+  --paper-3:#edf1fa;
+  --navy:#0b1440;
+  --navy-2:#16225c;
+  --muted:#525f8a;
+  --dim:#6e7899;
+  --accent:#2846c4;
+  --accent-2:#3a5ce0;
+  --accent-lo:#4661a2;
+  --line:rgba(11,20,64,.10);
+  --line-strong:rgba(11,20,64,.19);
+  --shadow-sm:0 1px 2px rgba(11,20,64,.05),0 8px 24px -18px rgba(11,20,64,.35);
+  --shadow-md:0 24px 60px -34px rgba(11,20,64,.45),0 2px 6px rgba(11,20,64,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --page:1080px;
+  --radius:14px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--navy);
+  font-family:var(--sans);font-size:17px;line-height:1.65;
+  font-weight:400;letter-spacing:-.011em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.08}
+p{margin:0}
+::selection{background:rgba(40,70,196,.16)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;background:var(--navy);color:#fff;padding:.7rem 1rem;z-index:99;border-radius:8px}
+.skip:focus{left:1rem;top:1rem}
+
+/* ---------- layout ---------- */
+.wrap{width:100%;max-width:var(--page);margin:0 auto;padding:0 24px}
+.narrow{max-width:680px}
+section{position:relative}
+.band{padding:clamp(5rem,13vh,9.5rem) 0}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent)}
+.eyebrow{
+  font-size:.735rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.15rem;
+}
+h2{font-size:clamp(1.85rem,4.1vw,2.7rem)}
+h3{font-size:1.06rem;letter-spacing:-.02em;line-height:1.35}
+.lede{color:var(--muted);font-size:clamp(1.03rem,1.7vw,1.2rem);line-height:1.62}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(253,253,254,.86);
+  background:color-mix(in srgb,var(--paper) 84%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s ease;
+}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;gap:1.5rem;height:66px}
+.brand{font-weight:600;letter-spacing:-.03em;font-size:1.09rem;color:var(--navy)}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:1.9rem}
+.nav-links a{color:var(--muted);font-size:.925rem;transition:color .18s ease}
+.nav-links a:hover{color:var(--navy)}
+@media(max-width:720px){.nav-links .hide-sm{display:none}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font:inherit;font-size:.94rem;font-weight:550;letter-spacing:-.012em;
+  padding:.72rem 1.15rem;border-radius:10px;border:1px solid transparent;
+  cursor:pointer;white-space:nowrap;
+  transition:transform .16s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,color .2s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{
+  background:var(--navy);color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 12px 26px -14px rgba(11,20,64,.75);
+}
+.btn-primary:hover{background:var(--accent);box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 16px 34px -14px rgba(40,70,196,.7)}
+.btn-ghost{background:#fff;border-color:var(--line-strong);color:var(--navy);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{border-color:rgba(11,20,64,.34);background:var(--paper-2)}
+.btn .arw{transition:transform .2s ease}
+.btn:hover .arw{transform:translateX(3px)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(2.6rem,7vh,5rem) 0 clamp(4rem,9vh,7rem);overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:-30% 0 auto 50%;translate:-50% 0;
+  width:min(1300px,150vw);aspect-ratio:1.6/1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,rgba(40,70,196,.12),rgba(70,97,162,.06) 44%,transparent 70%);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.75;
+  background:
+    linear-gradient(rgba(11,20,64,.055) 1px,transparent 1px) 0 0/100% 34px,
+    linear-gradient(90deg,rgba(11,20,64,.055) 1px,transparent 1px) 0 0/34px 100%;
+  mask-image:radial-gradient(ellipse 78% 62% at 50% 34%,#000 12%,transparent 72%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 62% at 50% 34%,#000 12%,transparent 72%);
+}
+.hero-in{position:relative;z-index:1;text-align:center}
+
+/* the mark and the headline, shoulder to shoulder */
+.hero-head{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(.9rem,3.1vw,2.5rem);
+}
+.hero-head h1{text-align:left;flex:0 1 auto}
+.hero-mark{position:relative;flex:none;line-height:0}
+.hero-mark::before{
+  content:"";position:absolute;inset:-34% -30% -22%;pointer-events:none;
+  background:radial-gradient(circle at 50% 48%,rgba(40,70,196,.17),rgba(70,97,162,.07) 45%,transparent 70%);
+}
+.hero-mark img{
+  position:relative;width:clamp(96px,15vw,172px);height:auto;
+  filter:drop-shadow(0 20px 32px rgba(11,20,64,.24));
+  animation:
+    rise .9s cubic-bezier(.2,.7,.3,1) both,
+    float 4.5s ease-in-out .9s infinite;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.965)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+.pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.36rem .8rem .36rem .62rem;margin:0;
+  border:1px solid var(--line-strong);border-radius:999px;
+  background:#fff;font-size:.8rem;color:var(--muted);letter-spacing:-.005em;
+  box-shadow:var(--shadow-sm);
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(40,70,196,.16)}
+h1{font-size:clamp(2.5rem,7.4vw,4.7rem);letter-spacing:-.042em}
+h1 .hand{
+  position:relative;white-space:nowrap;
+  background:linear-gradient(100deg,#16225c,#2846c4 60%,#4661a2);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+h1 .hand::after{
+  content:"";position:absolute;left:-1%;right:-1%;bottom:-.1em;height:.09em;border-radius:99px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.5;
+}
+.hero .lede{margin:clamp(1.4rem,3vh,2rem) auto 0;max-width:39rem}
+.hero-tag{display:flex;justify-content:flex-end;max-width:52rem;margin:1.5rem auto 0}
+.forms{margin-top:2.4rem}
+.hero-tag+.forms{margin-top:1.25rem}
+@media(max-width:760px){
+  .hero-head{flex-direction:column;gap:clamp(1.1rem,3vh,1.7rem)}
+  .hero-head h1{text-align:center}
+  .hero-tag{justify-content:center;margin-top:1.3rem;max-width:none}
+}
+.wl{display:flex;gap:.55rem;justify-content:center;flex-wrap:wrap;max-width:29rem;margin:0 auto}
+.wl input{
+  flex:1 1 15rem;min-width:0;font:inherit;font-size:.94rem;color:var(--navy);
+  background:#fff;border:1px solid var(--line-strong);border-radius:10px;
+  padding:.72rem .95rem;box-shadow:var(--shadow-sm);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.wl input::placeholder{color:var(--dim)}
+.wl input:hover{border-color:rgba(11,20,64,.3)}
+.wl input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(40,70,196,.14)}
+.wl-note{margin-top:.95rem;font-size:.84rem;color:var(--dim)}
+.wl-ok{
+  display:none;margin:0 auto;max-width:29rem;text-align:center;
+  border:1px solid rgba(40,70,196,.34);background:rgba(40,70,196,.06);
+  border-radius:10px;padding:.85rem 1rem;font-size:.94rem;color:var(--accent);
+}
+.is-sent .wl,.is-sent .wl-note{display:none}
+.is-sent .wl-ok{display:block}
+
+/* ---------- hero art ---------- */
+.art{position:relative;z-index:1;margin:clamp(3rem,7vh,5rem) auto 0;max-width:940px}
+.art-frame{
+  border:1px solid var(--line);border-radius:calc(var(--radius) + 4px);
+  background:#fff;padding:clamp(.75rem,2vw,1.4rem);
+  box-shadow:var(--shadow-md);
+}
+.art-frame svg{width:100%;height:auto;border-radius:var(--radius);display:block}
+.ink-line{fill:none;stroke:#16225c;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ink-dim{stroke:#7a86ad;opacity:.85}
+.hl{fill:#2846c4;fill-opacity:.15;stroke:none}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.15s cubic-bezier(.65,0,.35,1) forwards}
+.fade{opacity:0;animation:fade .7s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  .draw{animation:none;stroke-dashoffset:0}
+  .fade{animation:none;opacity:1}
+  .hero-mark img{animation:none}
+}
+
+/* ---------- steps ---------- */
+.steps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:3rem;box-shadow:var(--shadow-sm)}
+@media(min-width:780px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:#fff;padding:1.9rem 1.6rem}
+.step-n{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.06em;margin-bottom:1.1rem}
+.step h3{margin-bottom:.55rem}
+.step p{color:var(--muted);font-size:.945rem}
+
+/* ---------- features ---------- */
+.feats{display:grid;gap:2.4rem 2.8rem;margin-top:3.4rem}
+@media(min-width:700px){.feats{grid-template-columns:1fr 1fr}}
+.feat{display:flex;gap:1rem}
+.feat .ic{
+  flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  border:1px solid rgba(40,70,196,.18);background:rgba(40,70,196,.07);color:var(--accent);
+}
+.feat .ic svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.feat h3{margin-bottom:.35rem}
+.feat p{color:var(--muted);font-size:.93rem;line-height:1.6}
+
+/* ---------- own / files ---------- */
+.own{background:linear-gradient(180deg,transparent,var(--paper-2),transparent)}
+.own-grid{display:grid;gap:2.6rem;align-items:center}
+@media(min-width:860px){.own-grid{grid-template-columns:1.05fr .95fr;gap:4rem}}
+.tree{
+  font-family:var(--mono);font-size:.855rem;line-height:1.95;color:var(--muted);
+  border:1px solid var(--line);border-radius:var(--radius);background:#fff;
+  padding:1.4rem 1.5rem;overflow-x:auto;box-shadow:var(--shadow-sm);
+}
+.tree .d{color:var(--accent);font-weight:500}
+.tree .c{color:var(--dim)}
+.claims{list-style:none;padding:0;margin:1.8rem 0 0;display:grid;gap:.85rem}
+.claims li{display:flex;gap:.7rem;color:var(--muted);font-size:.945rem}
+.claims svg{flex:none;width:17px;height:17px;margin-top:.28rem;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.claims code{font-family:var(--mono);font-size:.86em;color:var(--accent);background:rgba(40,70,196,.07);padding:.1em .4em;border-radius:5px}
+
+/* ---------- pricing ---------- */
+.tiers{display:grid;gap:1.1rem;margin:3.2rem auto 0;align-items:start;max-width:47rem}
+@media(min-width:820px){.tiers{grid-template-columns:1fr 1fr}}
+/* Uncomment a third .tier and the row widens to full page width on its own —
+   no CSS edit needed. Falls back to the two-column grid without :has(). */
+.tiers:has(.tier:nth-child(3)){max-width:none}
+@media(min-width:900px){.tiers:has(.tier:nth-child(3)){grid-template-columns:repeat(3,1fr)}}
+.tier{
+  position:relative;border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;padding:1.9rem 1.6rem;display:flex;flex-direction:column;height:100%;
+  box-shadow:var(--shadow-sm);
+}
+.tier.lift{
+  border-color:rgba(40,70,196,.3);
+  background:linear-gradient(180deg,rgba(40,70,196,.055),#fff 62%);
+  box-shadow:var(--shadow-md);
+}
+.tier-tag{
+  position:absolute;top:-1px;right:1.3rem;transform:translateY(-50%);
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--navy);color:#fff;padding:.24rem .6rem;border-radius:999px;
+}
+.tier-name{font-size:.79rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.tier.lift .tier-name{color:var(--accent)}
+.price{display:flex;align-items:baseline;gap:.45rem;margin:.95rem 0 .3rem}
+.price b{font-size:2.5rem;font-weight:600;letter-spacing:-.045em;line-height:1}
+.price span{font-size:.88rem;color:var(--dim)}
+.tier-sub{color:var(--muted);font-size:.9rem;min-height:2.9em}
+.tier ul{list-style:none;padding:0;margin:1.5rem 0 1.8rem;display:grid;gap:.7rem}
+.tier li{display:flex;gap:.6rem;font-size:.9rem;color:var(--muted);line-height:1.5}
+.tier li svg{flex:none;width:15px;height:15px;margin-top:.3rem;stroke:var(--accent);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tier .btn{margin-top:auto;justify-content:center;width:100%}
+.soon{
+  display:inline-block;margin-left:.35rem;font-size:.68rem;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--dim);border:1px solid var(--line-strong);
+  border-radius:999px;padding:.05rem .42rem;white-space:nowrap;vertical-align:1px;
+}
+.fine{margin-top:2rem;font-size:.85rem;color:var(--dim);max-width:44rem}
+.fine b{color:var(--muted);font-weight:550}
+
+/* ---------- closing ---------- */
+.close{text-align:center}
+.close h2{max-width:22rem;margin:0 auto}
+.close .forms{margin-top:2.2rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-size:.875rem;background:var(--paper-2)}
+.foot{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;align-items:center}
+.foot nav{margin-left:auto;display:flex;gap:1.5rem;flex-wrap:wrap}
+.foot a:hover{color:var(--navy)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/">Obsilide</a>
+    <div class="nav-links">
+      <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-ghost" href="#waitlist">Early access</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-head">
+        <div class="hero-mark">
+          <picture>
+            <source type="image/webp"
+                    srcset="logo-138.webp 138w, logo-276.webp 276w, logo-414.webp 414w"
+                    sizes="(max-width:760px) 128px, 172px">
+            <img src="logo-276.png"
+                 srcset="logo-138.png 138w, logo-276.png 276w, logo-414.png 414w"
+                 sizes="(max-width:760px) 128px, 172px"
+                 width="414" height="413" alt="" fetchpriority="high" decoding="async">
+          </picture>
+        </div>
+        <h1>Your handwriting,<br><span class="hand">linked</span>.</h1>
+      </div>
+
+      <p class="lede">Obsilide is a handwriting-first notebook for Android. Circle a word you wrote,
+        and it becomes a link to a new note — one whose cover <em>is</em> that handwriting.</p>
+
+      <div class="hero-tag">
+        <span class="pill"><span class="dot" aria-hidden="true"></span> In development · Android first</span>
+      </div>
+
+      <div class="forms" id="waitlist">
+        <!--
+          WAITLIST FORM — live, posting to Formspree (form id mqpzjjbe).
+          Both this and the closing form share one endpoint; the hidden "source" field
+          says which one converted. "_gotcha" is Formspree's honeypot: bots fill it,
+          humans can't see it, and those submissions are discarded without using quota.
+          Swapping the action back to REPLACE_WITH_FORM_ENDPOINT restores the mailto fallback.
+        -->
+        <form class="wl" id="wl-form" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
+          <label class="sr" for="wl-email">Email address</label>
+          <input type="hidden" name="source" value="hero">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input id="wl-email" type="email" name="email" required autocomplete="email"
+                 placeholder="you@example.com" aria-describedby="wl-note">
+          <button class="btn btn-primary" type="submit">
+            Get early access
+            <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+        <p class="wl-note" id="wl-note">One email when the first build is ready. No list, no noise.</p>
+        <p class="wl-ok" id="wl-ok" role="status">You’re on the list. Talk soon.</p>
+      </div>
+    </div>
+
+    <!-- illustration, not a screenshot -->
+    <div class="wrap art">
+      <div class="art-frame">
+        <svg viewBox="0 0 940 400" role="img" aria-label="Illustration: a page of handwriting where one highlighted phrase links to a second note whose cover is that same handwriting.">
+          <defs>
+            <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f4f7fd"/>
+            </linearGradient>
+            <linearGradient id="cardg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f1f5fd"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="940" height="400" rx="12" fill="url(#pg)"/>
+          <g stroke="#0b1440" stroke-opacity=".11" stroke-width="1">
+            <path d="M40 100h560M40 156h560M40 212h560M40 268h560M40 324h560"/>
+          </g>
+
+          <!-- ordinary handwriting -->
+          <g>
+            <path class="ink-line ink-dim draw" style="--len:87;animation-delay:0.05s" d="M48 88 C49 74 55 74 60 88 C61 70 66 70 71 88 C72 70 78 70 82 88"/>
+            <path class="ink-line ink-dim draw" style="--len:237;animation-delay:0.18s" d="M95 88 C97 70 104 70 109 88 C111 69 116 69 121 88 C123 69 130 69 136 88 C138 60 144 56 146 82 C149 86 146 89 150 88 C152 73 159 73 165 88 C167 54 172 50 174 82 C177 86 174 89 178 88"/>
+            <path class="ink-line ink-dim draw" style="--len:243;animation-delay:0.31s" d="M193 88 C195 73 205 72 206 88 C208 109 201 111 209 88 C210 71 217 71 221 88 C223 71 231 71 237 88 C238 73 248 72 249 88 C251 105 244 107 252 88 C254 69 260 69 265 88 C266 70 273 70 277 88"/>
+            <path class="ink-line ink-dim draw" style="--len:92;animation-delay:0.44s" d="M294 88 C295 70 301 70 306 88 C307 71 313 71 318 88 C320 69 326 69 330 88"/>
+            <path class="ink-line ink-dim draw" style="--len:183;animation-delay:0.57s" d="M344 88 C346 72 354 72 360 88 C361 72 369 72 375 88 C376 70 384 70 389 88 C391 71 398 71 404 88 C405 73 412 72 413 88 C415 108 407 110 415 88"/>
+            <path class="ink-line ink-dim draw" style="--len:173;animation-delay:0.21s" d="M48 144 C50 126 56 126 61 144 C63 127 70 127 76 144 C78 127 83 127 88 144 C90 116 96 112 99 138 C102 142 99 145 103 144 C104 130 111 130 116 144"/>
+            <path class="ink-line ink-dim draw" style="--len:113;animation-delay:0.34s" d="M131 144 C132 127 139 127 144 144 C145 129 151 129 156 144 C157 129 164 129 169 144 C171 127 176 127 180 144"/>
+            <path class="ink-line ink-dim draw" style="--len:178;animation-delay:0.47s" d="M194 144 C196 127 203 127 208 144 C209 126 215 126 220 144 C221 129 228 129 233 144 C235 129 242 129 248 144 C250 126 257 126 263 144 C265 130 273 130 279 144"/>
+            <path class="ink-line ink-dim draw" style="--len:203;animation-delay:0.60s" d="M293 144 C294 128 300 128 305 144 C306 129 313 128 314 144 C316 159 308 161 316 144 C318 125 326 125 332 144 C334 129 341 129 346 144 C347 129 355 128 355 144 C357 165 350 167 358 144"/>
+            <path class="ink-line ink-dim draw" style="--len:147;animation-delay:0.73s" d="M372 144 C374 128 381 128 386 144 C387 127 393 127 398 144 C400 126 407 126 413 144 C414 130 422 130 428 144 C429 128 435 128 440 144"/>
+            <path class="ink-line ink-dim draw" style="--len:235;animation-delay:0.37s" d="M48 256 C50 237 57 237 62 256 C63 239 69 239 73 256 C75 221 80 217 82 250 C85 254 81 257 85 256 C86 237 93 237 97 256 C99 241 108 240 109 256 C111 271 104 273 112 256 C113 241 120 241 124 256"/>
+            <path class="ink-line ink-dim draw" style="--len:125;animation-delay:0.50s" d="M141 256 C142 237 149 237 154 256 C156 237 162 237 167 256 C168 242 175 242 180 256 C181 238 188 238 194 256"/>
+            <path class="ink-line ink-dim draw" style="--len:142;animation-delay:0.63s" d="M211 256 C212 238 218 238 222 256 C224 239 231 239 237 256 C239 241 246 241 252 256 C254 228 258 224 260 250 C263 254 260 257 264 256"/>
+            <path class="ink-line ink-dim draw" style="--len:176;animation-delay:0.76s" d="M277 256 C279 238 286 238 291 256 C293 238 299 238 304 256 C305 241 310 241 315 256 C316 242 323 242 327 256 C329 237 335 237 339 256 C341 240 348 240 353 256"/>
+            <path class="ink-line ink-dim draw" style="--len:210;animation-delay:0.53s" d="M48 312 C50 294 57 294 62 312 C64 293 72 293 78 312 C80 298 87 298 92 312 C94 293 100 293 105 312 C107 297 113 297 118 312 C119 297 126 296 127 312 C129 329 121 331 129 312"/>
+            <path class="ink-line ink-dim draw" style="--len:148;animation-delay:0.66s" d="M142 312 C144 292 149 292 154 312 C156 294 164 294 170 312 C171 282 176 278 178 306 C181 310 177 313 181 312 C182 296 189 296 194 312"/>
+            <path class="ink-line ink-dim draw" style="--len:264;animation-delay:0.79s" d="M212 312 C213 298 221 298 226 312 C228 297 235 297 240 312 C242 278 247 274 249 306 C252 310 248 313 252 312 C254 281 259 277 262 306 C265 310 262 313 266 312 C267 293 275 293 280 312 C282 297 292 296 292 312 C294 331 287 333 295 312"/>
+          </g>
+
+          <!-- the linked slice: highlight behind, brighter ink on top -->
+          <rect class="hl fade" style="animation-delay:1.25s" x="38" y="168" width="171" height="48" rx="10"/>
+          <g>
+            <path class="ink-line draw" style="--len:154;animation-delay:0.42s" d="M48 200 C50 181 56 181 61 200 C62 183 69 183 75 200 C76 182 83 182 88 200 C89 185 99 184 99 200 C101 219 94 221 102 200"/>
+            <path class="ink-line draw" style="--len:253;animation-delay:0.60s" d="M116 200 C118 168 123 164 126 194 C129 198 125 201 129 200 C130 182 136 182 140 200 C142 185 152 184 152 200 C154 217 147 219 155 200 C157 186 163 186 167 200 C169 186 177 186 182 200 C184 169 189 165 192 194 C195 198 191 201 195 200"/>
+          </g>
+
+          <!-- link -->
+          <g class="fade" style="animation-delay:1.6s">
+            <path d="M223 194c150-9 244 9 366 0" fill="none" stroke="#2846c4" stroke-width="2"
+                  stroke-linecap="round" stroke-dasharray="5 6"/>
+            <path d="M598 188l9 6-9 6" fill="none" stroke="#2846c4" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- the note it points at: its cover IS that handwriting -->
+          <g class="fade" style="animation-delay:1.82s">
+            <rect x="620" y="58" width="286" height="284" rx="16" fill="url(#cardg)"
+                  stroke="#0b1440" stroke-opacity=".14"/>
+            <g transform="translate(600 -78) scale(.92)">
+              <g class="ink-line" transform="translate(0 0)">
+                <path d="M48 200 C50 181 56 181 61 200 C62 183 69 183 75 200 C76 182 83 182 88 200 C89 185 99 184 99 200 C101 219 94 221 102 200 M116 200 C118 168 123 164 126 194 C129 198 125 201 129 200 C130 182 136 182 140 200 C142 185 152 184 152 200 C154 217 147 219 155 200 C157 186 163 186 167 200 C169 186 177 186 182 200 C184 169 189 165 192 194 C195 198 191 201 195 200" fill="none" stroke="#16225c" stroke-width="2.8"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+            <path d="M648 158h230" stroke="#0b1440" stroke-opacity=".10" stroke-width="1"/>
+            <g stroke="#0b1440" stroke-opacity=".22" stroke-width="2.4" stroke-linecap="round">
+              <path d="M648 196h214M648 226h176M648 256h198M648 286h132"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <!-- ============ HOW ============ -->
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="narrow rv">
+        <p class="eyebrow">How it works</p>
+        <h2>Typing files things away.<br>Handwriting is where you think.</h2>
+        <p class="lede" style="margin-top:1.3rem">So Obsilide doesn’t ask you to type your notes back out to make them
+          useful. The link lives on the ink itself — the strokes stay exactly as you drew them.</p>
+      </div>
+
+      <div class="steps rv">
+        <div class="step">
+          <p class="step-n">01</p>
+          <h3>Write</h3>
+          <p>Ink goes down under the nib, not a frame behind it. Rest your hand on the glass — palm rejection handles it.</p>
+        </div>
+        <div class="step">
+          <p class="step-n">02</p>
+          <h3>Select a slice</h3>
+          <p>Lasso it, drag along the line, or tap a word. Selection lands on part of a stroke, so it works on cursive.</p>
+        </div>
+        <div class="step">
+          <p class="step-n">03</p>
+          <h3>It becomes a link</h3>
+          <p>Tap it later and you’re in a new note. Its cover is the handwriting you selected — nothing to name, nothing to type.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="band" id="features" style="padding-top:0">
+    <div class="wrap">
+      <div class="narrow rv">
+        <p class="eyebrow">Built for the pen</p>
+        <h2>Fast where it counts.</h2>
+      </div>
+      <div class="feats rv">
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2L4.1 12.6a1 1 0 00.8 1.6H10l-1 7.8 9-11.2a1 1 0 00-.8-1.6H12l1-7.2z"/></svg></span>
+          <div>
+            <h3>Front-buffered ink</h3>
+            <p>Wet strokes render straight to the front buffer — the same technique Samsung Notes uses — with motion prediction and full digitizer sampling on top.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path d="M9 13h6"/></svg></span>
+          <div>
+            <h3>Plain files you own</h3>
+            <p>One folder per note: a Markdown file with the links, an ink sidecar with the strokes. Readable in any editor, backed up like anything else.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7.5 7.5"/><path d="M3 21l7.5-7.5"/></svg></span>
+          <div>
+            <h3>Canvas that keeps going</h3>
+            <p>Keep writing and the page extends under you. Pinch to zoom in on small handwriting; two fingers to move around.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M8.5 6.5L12 3l3.5 3.5"/><path d="M5 14c0 4 3 7 7 7s7-3 7-7"/></svg></span>
+          <div>
+            <h3>Palm rejection that trusts the pen</h3>
+            <p>Once the stylus is in play, your hand stops drawing. Pick the pen up and touch scrolls again. The window is yours to tune.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg></span>
+          <div>
+            <h3>A graph you drew</h3>
+            <p>Links go both ways: every note knows what points at it. Notebooks are covers, not filenames — you recognise your own handwriting faster than any title.</p>
+          </div>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div>
+            <h3>Offline by construction</h3>
+            <p>The app ships without the internet permission. There is no account, no telemetry, and no server it could talk to.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OWNERSHIP ============ -->
+  <section class="band own">
+    <div class="wrap own-grid">
+      <div class="rv">
+        <p class="eyebrow">Your notes, your disk</p>
+        <h2>No account. No network permission.</h2>
+        <p class="lede" style="margin-top:1.2rem">Handwriting is the most personal thing you can put in an app.
+          So Obsilide keeps it in plain files on your device and asks for nothing else.</p>
+        <ul class="claims">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Links live in the Markdown as <code>[[wiki-links]]</code> — the graph rebuilds from text alone</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Saves are atomic and fsynced; a killed app never leaves a half-written page</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>An unreadable file is quarantined, never deleted — handwriting doesn’t get thrown away quietly</span></li>
+        </ul>
+      </div>
+      <div class="rv">
+        <div class="tree" aria-label="Example file layout">
+<span class="d">notes/</span>
+<span class="d">├── ideas/</span>
+│   ├── note.md          <span class="c">← title + [[links]]</span>
+│   ├── note.ink         <span class="c">← your strokes</span>
+│   └── thumbnail.png    <span class="c">← the cover</span>
+<span class="d">└── reading-list/</span>
+    ├── note.md
+    └── note.ink
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <!-- ============ PRICING ============ -->
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="narrow rv">
+        <p class="eyebrow">Pricing</p>
+        <h2>Pay once, if you ever pay.</h2>
+        <p class="lede" style="margin-top:1.2rem">The notebook is free and stays free. Everything paid is a
+          one-time price for life — no subscription, from a developer of one.</p>
+      </div>
+
+      <div class="tiers rv">
+        <div class="tier">
+          <p class="tier-name">Free</p>
+          <p class="price"><b>$0</b></p>
+          <p class="tier-sub">The whole notebook. Forever, with no account.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Unlimited notes and handwritten links</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Low-latency ink, pressure pen, highlighter</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Extending canvas, zoom, reading mode</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Plain files on your device</li>
+          </ul>
+          <a class="btn btn-ghost" href="#waitlist">Get early access</a>
+        </div>
+
+        <div class="tier lift">
+          <span class="tier-tag">Most will want this</span>
+          <p class="tier-name">Premium</p>
+          <p class="price"><b>$15</b><span>once · lifetime</span></p>
+          <p class="tier-sub">Back an indie build, and get every premium feature as it ships.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Free</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Search and question your handwriting with AI<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Samsung Notes import and sync<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>PDF export, notebook covers, full pen palette<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Every future premium feature, no upgrade fee</li>
+          </ul>
+          <a class="btn btn-primary" href="#waitlist">Claim the lifetime price</a>
+        </div>
+
+        <!-- PARKED: uncomment this block to sell a third tier. The grid re-flows to
+             three columns by itself; nothing else needs changing.
+        <div class="tier">
+          <p class="tier-name">Founder</p>
+          <p class="price"><b>$35</b><span>once · lifetime</span></p>
+          <p class="tier-sub">Premium, plus your vault on every device — and on the web.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Premium</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>End-to-end encrypted sync across every device you own — no device cap, no monthly bill<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Publish a notebook to the web at your own domain — handwriting and all<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>20 GB hosted vault, kept for the life of the product</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>A direct line to the developer, and first vote on the roadmap</li>
+          </ul>
+          <a class="btn btn-ghost" href="#waitlist">Become a founder</a>
+        </div>
+        -->
+      </div>
+
+      <p class="fine rv"><b>Straight about what exists:</b> version&nbsp;1 is the free notebook — ink, links, canvas,
+        local files. Items marked <span class="soon">in development</span> are on the roadmap, not shipping yet;
+        paying early is how you lock the lifetime price and fund them. Nothing here renews, ever.</p>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="band close">
+    <div class="wrap">
+      <div class="rv">
+        <h2>Be there for the first build.</h2>
+        <div class="forms">
+          <form class="wl" id="wl-form-2" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
+            <input type="hidden" name="source" value="footer">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <label class="sr" for="wl-email-2">Email address</label>
+            <input id="wl-email-2" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+            <button class="btn btn-primary" type="submit">
+              Get early access
+              <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+          <p class="wl-note">Android first. One email when it’s ready.</p>
+          <p class="wl-ok" role="status">You’re on the list. Talk soon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr">2026</span> Obsilide</span>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:support@obsilide.com">Contact</a>
+      <a href="#waitlist">Early access</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CONTACT = "support@obsilide.com";        /* swap if you'd rather collect elsewhere */
+  var PLACEHOLDER = "REPLACE_WITH_FORM_ENDPOINT";
+
+  /* nav hairline on scroll */
+  var nav = document.getElementById("nav");
+  var onScroll = function(){ nav.classList.toggle("scrolled", window.scrollY > 8); };
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* reveal on scroll */
+  var items = document.querySelectorAll(".rv");
+  if (!("IntersectionObserver" in window)) {
+    items.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {rootMargin:"0px 0px -12% 0px", threshold:.08});
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  /* waitlist: post to the configured endpoint, or fall back to a pre-filled email */
+  Array.prototype.forEach.call(document.querySelectorAll(".wl"), function(form){
+    form.addEventListener("submit", function(ev){
+      var input = form.querySelector("input[type=email]");
+      var email = (input.value || "").trim();
+      if (!email || email.indexOf("@") < 1 || !input.checkValidity()) {
+        ev.preventDefault(); input.focus(); return;
+      }
+      var endpoint = form.getAttribute("action") || "";
+      var done = function(){ form.closest(".forms").classList.add("is-sent"); };
+
+      /* no endpoint configured yet → open the user's mail client instead */
+      if (!endpoint || endpoint === PLACEHOLDER) {
+        ev.preventDefault();
+        window.location.href = "mailto:" + CONTACT +
+          "?subject=" + encodeURIComponent("Obsilide early access") +
+          "&body=" + encodeURIComponent("Add me to the list: " + email);
+        done();
+        return;
+      }
+
+      /* endpoint configured → submit in place */
+      ev.preventDefault();
+      var btn = form.querySelector("button");
+      var label = btn.innerHTML;
+      btn.disabled = true; btn.textContent = "Sending…";
+      fetch(endpoint, {
+        method: "POST",
+        headers: {"Accept":"application/json"},
+        body: new FormData(form)
+      }).then(function(r){
+        if (!r.ok) throw new Error("bad status " + r.status);
+        done();
+      }).catch(function(){
+        /* let the browser do a plain POST rather than swallowing the signup */
+        btn.disabled = false; btn.innerHTML = label;
+        form.submit();
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
