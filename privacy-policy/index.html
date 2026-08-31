@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Obsilide</title>
+<meta name="description" content="Your notes never leave your device. Obsilide has no account, no analytics and no sync — the only network request it makes is a one-time Premium license activation.">
+<link rel="canonical" href="https://obsilide.com/privacy-policy/">
+<meta name="theme-color" content="#fdfdfe">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://obsilide.com/privacy-policy/">
+<meta property="og:site_name" content="Obsilide">
+<meta property="og:title" content="Privacy Policy — Obsilide">
+<meta property="og:description" content="Your notes never leave your device. No account, no analytics, no sync — the only network request Obsilide makes is a one-time license activation.">
+<meta property="og:image" content="https://obsilide.com/assets/og.jpg">
+<link rel="stylesheet" href="../assets/page.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">Obsilide</a>
+    <a class="back" href="../index.html">← Home</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Obsilide</p>
+    <h1>Privacy Policy</h1>
+    <p class="sub">Effective 31 August 2026 · Document version 2026.08.31</p>
+
+    <h2>1. Privacy Statement</h2>
+    <p>Obsilide is an Android handwriting notebook. You write with a stylus, and a slice of
+    your own handwriting can be turned into a link to another note. This policy explains what
+    the app does and does not do with your information.</p>
+
+    <div class="callout">
+      <p><strong>Your notes never leave your device.</strong> Obsilide has no user accounts,
+      no analytics, no advertising, no crash reporting, and no sync. Nothing you write is
+      uploaded anywhere, and the developer cannot read it.</p>
+      <p>The app makes exactly one kind of network request in its life: activating an Obsilide
+      Premium license, described in section&nbsp;3. If you never buy Premium, it never contacts
+      the network at all.</p>
+    </div>
+
+    <h2>2. Information Stored on Your Device</h2>
+    <p>Obsilide saves everything in Android's app-private storage. This includes:</p>
+    <ul>
+      <li>Your notes — a Markdown file per note holding its title and links, and an ink
+        sidecar holding your strokes</li>
+      <li>The thumbnail image generated for each note on the home grid</li>
+      <li>Your pen, marker, and eraser preferences — color, size, palm-rejection window</li>
+      <li>App preferences and per-note view state, such as theme and each note's zoom and
+        scroll position</li>
+      <li>If you buy Premium: a flag recording that the license is active, and a random
+        installation ID. The license key itself is <strong>not</strong> stored after activation.</li>
+    </ul>
+    <p><strong>Local only:</strong> none of this is sent to the developer or to any third
+    party. Nobody but you and the apps you grant access to can read that folder, and it is
+    deleted when you uninstall Obsilide or clear its storage.</p>
+    <p>Android's own backup feature is left on, as it is for most apps. If your device backs
+    itself up to your personal Google account, your notes may be included in that backup.
+    That copy is governed by your device and cloud provider, not by the developer, and you can
+    turn it off in your Android settings.</p>
+
+    <h2>3. Information the App Transmits</h2>
+    <p><strong>Your notes are never transmitted.</strong> There is no sync, no upload, no
+    telemetry, and no crash reporting. The one network request the app can make is license
+    activation, and it happens only if you buy Premium and paste in a key.</p>
+    <p>When you activate a license, the app sends two things to a small server run by the
+    developer:</p>
+    <ul>
+      <li><strong>The license key</strong> you paste into the activation dialog.</li>
+      <li><strong>An anonymous installation ID</strong> — a random identifier generated once
+        on your device. It is not derived from your hardware, your Google account, or anything
+        about you, and it is not attached to your notes.</li>
+    </ul>
+    <p>That server forwards both to <a href="https://www.creem.io/">Creem</a>, the payment
+    provider that issued the key, which confirms the key is valid and belongs to Obsilide
+    Premium. The answer comes back as a yes or a no. The server exists only so that the
+    payment provider's API credentials do not have to ship inside the app; it keeps no
+    database and does not log license keys.</p>
+    <p>Once a license is active, the result is saved on your device and <strong>the app does
+    not contact the network again</strong> — not on the next launch, not ever. Reinstalling
+    Obsilide or clearing its data means activating the key once more.</p>
+
+    <h3>3.1 Permissions and Their Purpose</h3>
+    <p>Obsilide requests <strong>one</strong> Android permission:</p>
+    <ul>
+      <li><code>INTERNET</code> — used solely for the license activation described above.</li>
+    </ul>
+    <p>It requests nothing else: no storage, camera, microphone, location, contacts, or phone
+    state. You can check this yourself — Android lists an app's permissions on its Play Store
+    page and under <em>Settings → Apps → Obsilide → Permissions</em>.</p>
+
+    <h2>4. Buying Premium</h2>
+    <p>Obsilide Premium is a one-time purchase, and it is optional — the free notebook is
+    complete, has no account, and makes no network requests at all.</p>
+    <p>The purchase itself happens on Creem's hosted checkout, on their systems. Your card
+    details are entered on their page and are never seen by the app or by the developer. What
+    the developer receives is Creem's record of the sale — your email address and the license
+    key issued to you — used to deliver that key and to support your purchase, and for nothing
+    else. It is never sold or shared.</p>
+    <p>Creem is the merchant of record for the sale. Their handling of your payment and email
+    is governed by <a href="https://www.creem.io/privacy">Creem's privacy policy</a>.</p>
+
+    <h2>5. Third-Party Services</h2>
+    <p><strong>On your device:</strong> Obsilide uses open-source Android libraries — Jetpack's
+    ink, graphics, and input components — for stroke rendering, low-latency drawing, and file
+    handling. They run entirely on your device and collect nothing. The app contains no
+    analytics, advertising, or tracking SDKs.</p>
+    <p><strong>Off your device:</strong> only two services are involved, and only if you buy
+    Premium — Creem, which takes the payment and issues the license key, and Cloudflare, which
+    hosts the activation endpoint and processes the request as its infrastructure provider.</p>
+
+    <h2>6. This Website</h2>
+    <p>obsilide.com sets no cookies and loads no third-party scripts, fonts, or trackers.
+    The site is served by GitHub Pages, which processes ordinary request logs (including IP
+    addresses) as its infrastructure provider. Choosing to buy Premium sends you to Creem's
+    checkout, which is subject to their policy rather than this one.</p>
+    <p>If you join the early-access list, the only thing collected is the email address you
+    type, used only to tell you when a build is ready. The form is processed by
+    <a href="https://formspree.io/legal/privacy-policy">Formspree</a>, which stores that
+    address until the announcement is sent. The list is never sold or shared, and it is
+    deleted once the build has shipped. Write to the address below at any time to be removed
+    sooner.</p>
+
+    <h2>7. If This Ever Changes</h2>
+    <p>Features on the roadmap — syncing across devices, publishing a notebook to the web —
+    would by definition move more data off your device. They will be opt-in, they will be
+    described here before they ship, and the notebook will keep working entirely offline if you
+    never turn them on.</p>
+
+    <h2>8. Minors' Privacy</h2>
+    <p>Obsilide is a notebook and is not directed at children under 13. It collects no personal
+    information from any user, regardless of age.</p>
+
+    <h2>9. Policy Updates</h2>
+    <p>If this policy changes, the updated version will be posted at this same address with a
+    revised effective date.</p>
+
+    <h2>10. Contact Information</h2>
+    <p><strong>Privacy inquiries:</strong>
+    <a href="mailto:support@obsilide.com?subject=Obsilide%20Privacy%20Policy%20Question">support@obsilide.com</a><br>
+    <strong>Subject line:</strong> Obsilide Privacy Policy Question</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr">2026</span> Obsilide</span>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="mailto:support@obsilide.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

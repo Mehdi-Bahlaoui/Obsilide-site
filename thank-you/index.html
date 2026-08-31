@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank you — Obsilide Premium</title>
+<meta name="description" content="Your Obsilide Premium license is ready. Copy the key from your receipt and activate it in Settings → Premium.">
+<link rel="canonical" href="https://obsilide.com/thank-you/">
+<meta name="theme-color" content="#fdfdfe">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="../assets/page.css">
+<style>
+/* purchase confirmation — the mark, and the numbered activation steps */
+main.ty{padding:clamp(3.5rem,12vh,7rem) 0 clamp(4rem,10vh,6rem)}
+.ty-top{text-align:center}
+.ty-mark{width:112px;margin:0 auto 2rem;position:relative}
+.ty-mark::before{
+  content:"";position:absolute;inset:-46% -46% auto -46%;aspect-ratio:1/1;
+  pointer-events:none;z-index:-1;
+  background:radial-gradient(circle at 50% 50%,rgba(40,70,196,.14),transparent 66%);
+}
+.ty-top .lede{max-width:44ch;margin-left:auto;margin-right:auto}
+
+.card{
+  border:1px solid var(--line);background:#fff;border-radius:14px;
+  padding:1.6rem 1.7rem;margin:2.8rem 0 0;box-shadow:var(--shadow-sm);
+}
+.card > h2:first-child{margin-top:0}
+.card h2{font-size:.735rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 1.2rem}
+
+/* steps */
+.steps{list-style:none;counter-reset:step;margin:0;padding:0}
+.steps li{
+  counter-increment:step;position:relative;
+  padding-left:2.6rem;margin-bottom:1.15rem;color:var(--muted);
+}
+.steps li:last-child{margin-bottom:0}
+.steps li::before{
+  content:counter(step);position:absolute;left:0;top:.12em;
+  width:1.65rem;height:1.65rem;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--paper-3);color:var(--accent);
+  font-size:.8rem;font-weight:600;letter-spacing:0;
+}
+.steps b{color:var(--navy);font-weight:600}
+.kbd{
+  font-family:var(--mono);font-size:.86em;color:var(--navy);white-space:nowrap;
+  background:var(--paper-2);border:1px solid var(--line);
+  padding:.1em .45em;border-radius:5px;
+}
+.note-small{font-size:.875rem;color:var(--dim);margin:1.3rem 0 0}
+.ty .btn-row{justify-content:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">Obsilide</a>
+    <a class="back" href="../index.html">← Home</a>
+  </div>
+</header>
+
+<main class="ty">
+  <div class="wrap">
+    <div class="ty-top">
+      <div class="ty-mark">
+        <picture>
+          <source type="image/webp" srcset="../assets/logo-138.webp 138w, ../assets/logo-276.webp 276w" sizes="112px">
+          <img src="../assets/logo-276.png" srcset="../assets/logo-138.png 138w, ../assets/logo-276.png 276w"
+               sizes="112px" width="276" height="276" alt="">
+        </picture>
+      </div>
+
+      <p class="eyebrow">Obsilide Premium</p>
+      <h1>Thank you.</h1>
+      <p class="lede">Your purchase is complete, and your license key is on its way.
+      One payment, no subscription — there is nothing to cancel and nothing to renew.</p>
+    </div>
+
+    <div class="card">
+      <h2>Activate your license</h2>
+      <ol class="steps">
+        <li><b>Copy your license key.</b> It is shown on the receipt page and sent to you by
+          email. Keep that email — the key is the only proof of purchase, and you will need it
+          again if you reinstall Obsilide or clear its data.</li>
+        <li><b>Open Obsilide</b> and go to <span class="kbd">Settings → Premium → Activate license</span>.</li>
+        <li><b>Paste the key</b> and tap Activate. This is the one moment the app goes online.</li>
+        <li><b>That's it.</b> Premium unlocks on that installation and keeps working offline —
+          the app never checks again.</li>
+      </ol>
+      <p class="note-small">Activation is per installation. There is no device limit and the
+      license does not expire.</p>
+    </div>
+
+    <div class="card">
+      <h2>What Premium unlocks</h2>
+      <p>Eight notebook cover styles — Coral, Amber, Forest, Ocean, Indigo, Plum, Graphite,
+      and Sand — and more local Premium features as they are added. Existing covers stay
+      visible whether or not Premium is active; only changing one is gated.</p>
+      <p>The free notebook is unchanged and stays free. Hosted AI, sync, publishing, and
+      storage are not included in this purchase.</p>
+    </div>
+
+    <div class="card">
+      <h2>No key in your inbox?</h2>
+      <p>Check your spam folder first — receipts are good at hiding there. If it still hasn't
+      arrived, write to <a href="mailto:support@obsilide.com?subject=Obsilide%20Premium%20license%20key">support@obsilide.com</a>
+      from the address you paid with and I'll resend it.</p>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn-primary" href="../index.html">
+        Back to obsilide.com
+        <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="../privacy-policy/index.html">Privacy</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr">2026</span> Obsilide</span>
+    <nav>
+      <a href="../privacy-policy/index.html">Privacy</a>
+      <a href="mailto:support@obsilide.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

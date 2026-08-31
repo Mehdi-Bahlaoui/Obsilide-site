@@ -14,14 +14,14 @@
 <meta property="og:site_name" content="Obsilide">
 <meta property="og:title" content="Obsilide — handwriting that links">
 <meta property="og:description" content="Circle a word you wrote and it becomes a link to a new note. A handwriting-first notebook for Android.">
-<meta property="og:image" content="https://obsilide.com/og.jpg">
+<meta property="og:image" content="https://obsilide.com/assets/og.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Obsilide — handwriting that links">
 <meta name="twitter:description" content="Circle a word you wrote and it becomes a link to a new note. A handwriting-first notebook for Android.">
-<meta name="twitter:image" content="https://obsilide.com/og.jpg">
+<meta name="twitter:image" content="https://obsilide.com/assets/og.jpg">
 <style>
 /* ---------- tokens ---------- */
 :root{
@@ -295,9 +295,31 @@ h1 .hand::after{
 .fine b{color:var(--muted);font-weight:550}
 
 /* ---------- closing ---------- */
-.close{text-align:center}
-.close h2{max-width:22rem;margin:0 auto}
-.close .forms{margin-top:2.2rem}
+/* Two columns: the line on the left, the signup on the right. The .wl rules are
+   shared with the hero, where the form is centred — so everything here overrides
+   inside .close only, and the media query hands it all back for the stacked case. */
+.close-in{
+  display:flex;align-items:center;flex-wrap:wrap;
+  gap:clamp(1.8rem,5vw,4rem);
+}
+.close-copy{flex:1 1 19rem;min-width:0}
+.close h2{margin:0;max-width:15ch}
+.close-form{flex:1 1 25rem;min-width:0;max-width:32rem}
+.close .forms{margin-top:0}
+.close .wl{margin:0;max-width:none;justify-content:flex-start}
+.close .wl input{flex:1 1 11rem}
+.close .wl-note{text-align:left}
+.close .wl-ok{margin:0;max-width:none;text-align:left}
+
+@media(max-width:820px){
+  .close-in{display:block;text-align:center}
+  .close h2{max-width:22rem;margin:0 auto}
+  .close .forms{margin-top:2.2rem}
+  .close .wl{justify-content:center;max-width:29rem;margin:0 auto}
+  .close .wl input{flex:1 1 15rem}
+  .close .wl-note{text-align:center}
+  .close .wl-ok{margin:0 auto;max-width:29rem;text-align:center}
+}
 
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-size:.875rem;background:var(--paper-2)}
@@ -335,10 +357,10 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
         <div class="hero-mark">
           <picture>
             <source type="image/webp"
-                    srcset="logo-138.webp 138w, logo-276.webp 276w, logo-414.webp 414w"
+                    srcset="assets/logo-138.webp 138w, assets/logo-276.webp 276w, assets/logo-414.webp 414w"
                     sizes="(max-width:760px) 128px, 172px">
-            <img src="logo-276.png"
-                 srcset="logo-138.png 138w, logo-276.png 276w, logo-414.png 414w"
+            <img src="assets/logo-276.png"
+                 srcset="assets/logo-138.png 138w, assets/logo-276.png 276w, assets/logo-414.png 414w"
                  sizes="(max-width:760px) 128px, 172px"
                  width="414" height="413" alt="" fetchpriority="high" decoding="async">
           </picture>
@@ -347,9 +369,10 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
       </div>
 
       <p class="lede">Obsilide is a handwriting-first notebook for Android. Circle a word you wrote,
-        and it becomes a link to a new note — one whose cover <em>is</em> that handwriting.</p>
+        and it becomes a link to a new note.</p>
 
       <div class="hero-tag">
+
         <span class="pill"><span class="dot" aria-hidden="true"></span> In development · Android first</span>
       </div>
 
@@ -530,7 +553,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
           <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
           <div>
             <h3>Offline by construction</h3>
-            <p>The app ships without the internet permission. There is no account, no telemetry, and no server it could talk to.</p>
+            <p>No account, no telemetry, no sync. Your notes never leave the device — the only request the app can make is a one-time license activation.</p>
           </div>
         </div>
       </div>
@@ -542,9 +565,10 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
     <div class="wrap own-grid">
       <div class="rv">
         <p class="eyebrow">Your notes, your disk</p>
-        <h2>No account. No network permission.</h2>
+        <h2>No account. Your notes never leave.</h2>
         <p class="lede" style="margin-top:1.2rem">Handwriting is the most personal thing you can put in an app.
-          So Obsilide keeps it in plain files on your device and asks for nothing else.</p>
+          So Obsilide keeps it in plain files on your device and asks for nothing else — one
+          permission, used once, to activate a license if you ever buy one.</p>
         <ul class="claims">
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Links live in the Markdown as <code>[[wiki-links]]</code> — the graph rebuilds from text alone</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Saves are atomic and fsynced; a killed app never leaves a half-written page</span></li>
@@ -569,13 +593,13 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   <div class="wrap"><div class="rule"></div></div>
 
   <!-- ============ PRICING ============ -->
-  <section class="band" id="pricing">
+  <!-- <section class="band" id="pricing">
     <div class="wrap">
       <div class="narrow rv">
         <p class="eyebrow">Pricing</p>
         <h2>Pay once, if you ever pay.</h2>
-        <p class="lede" style="margin-top:1.2rem">The notebook is free and stays free. Everything paid is a
-          one-time price for life — no subscription, from a developer of one.</p>
+        <p class="lede" style="margin-top:1.2rem">The notebook is free and stays free. Premium is a
+          one-time purchase — no subscription, from a developer of one.</p>
       </div>
 
       <div class="tiers rv">
@@ -593,62 +617,51 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
         </div>
 
         <div class="tier lift">
-          <span class="tier-tag">Most will want this</span>
+          <span class="tier-tag">Early price</span>
           <p class="tier-name">Premium</p>
-          <p class="price"><b>$15</b><span>once · lifetime</span></p>
-          <p class="tier-sub">Back an indie build, and get every premium feature as it ships.</p>
+          <p class="price"><b>$15</b><span>one-time</span></p>
+          <p class="tier-sub">Back an indie developer and unlock notebook covers. More local Premium features may be added later.</p>
           <ul>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Free</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Search and question your handwriting with AI<span class="soon">in development</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Samsung Notes import and sync<span class="soon">in development</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>PDF export, notebook covers, full pen palette<span class="soon">in development</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Every future premium feature, no upgrade fee</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Eight notebook cover styles<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Offline access after one license activation</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>More local Premium features may be added later</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Hosted AI, sync, and storage are not included</li>
           </ul>
-          <a class="btn btn-primary" href="#waitlist">Claim the lifetime price</a>
+          <a class="btn btn-primary" href="#waitlist">Join the Premium waitlist</a>
         </div>
 
-        <!-- PARKED: uncomment this block to sell a third tier. The grid re-flows to
-             three columns by itself; nothing else needs changing.
-        <div class="tier">
-          <p class="tier-name">Founder</p>
-          <p class="price"><b>$35</b><span>once · lifetime</span></p>
-          <p class="tier-sub">Premium, plus your vault on every device — and on the web.</p>
-          <ul>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Premium</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>End-to-end encrypted sync across every device you own — no device cap, no monthly bill<span class="soon">in development</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Publish a notebook to the web at your own domain — handwriting and all<span class="soon">in development</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>20 GB hosted vault, kept for the life of the product</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>A direct line to the developer, and first vote on the roadmap</li>
-          </ul>
-          <a class="btn btn-ghost" href="#waitlist">Become a founder</a>
-        </div>
-        -->
       </div>
 
-      <p class="fine rv"><b>Straight about what exists:</b> version&nbsp;1 is the free notebook — ink, links, canvas,
-        local files. Items marked <span class="soon">in development</span> are on the roadmap, not shipping yet;
-        paying early is how you lock the lifetime price and fund them. Nothing here renews, ever.</p>
     </div>
-  </section>
+  </section> -->
+
+
+
+  
 
   <!-- ============ CLOSE ============ -->
   <section class="band close">
     <div class="wrap">
-      <div class="rv">
-        <h2>Be there for the first build.</h2>
-        <div class="forms">
-          <form class="wl" id="wl-form-2" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
-            <input type="hidden" name="source" value="footer">
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <label class="sr" for="wl-email-2">Email address</label>
-            <input id="wl-email-2" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
-            <button class="btn btn-primary" type="submit">
-              Get early access
-              <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </button>
-          </form>
-          <p class="wl-note">Android first. One email when it’s ready.</p>
-          <p class="wl-ok" role="status">You’re on the list. Talk soon.</p>
+      <div class="close-in rv">
+        <div class="close-copy">
+          <h2>Get notified for the first build.</h2>
+        </div>
+        <div class="close-form">
+          <div class="forms">
+            <form class="wl" id="wl-form-2" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
+              <input type="hidden" name="source" value="footer">
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <label class="sr" for="wl-email-2">Email address</label>
+              <input id="wl-email-2" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+              <button class="btn btn-primary" type="submit">
+                Get early access
+                <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+              </button>
+            </form>
+            <p class="wl-note">Android first. We'll email you when it’s ready.</p>
+            <p class="wl-ok" role="status">You’re on the list. Talk soon.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -659,7 +672,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   <div class="wrap foot">
     <span>© <span id="yr">2026</span> Obsilide</span>
     <nav>
-      <a href="privacy.html">Privacy</a>
+      <a href="privacy-policy/">Privacy</a>
       <a href="mailto:support@obsilide.com">Contact</a>
       <a href="#waitlist">Early access</a>
     </nav>
