@@ -153,7 +153,7 @@ h3{font-size:1.06rem;letter-spacing:-.02em;line-height:1.35}
 
 .pill{
   display:inline-flex;align-items:center;gap:.5rem;
-  padding:.36rem .8rem .36rem .62rem;margin:0;
+  padding:.36rem .8rem .36rem .62rem;margin:1.5rem 0 0;
   border:1px solid var(--line-strong);border-radius:999px;
   background:#fff;font-size:.8rem;color:var(--muted);letter-spacing:-.005em;
   box-shadow:var(--shadow-sm);
@@ -170,32 +170,10 @@ h1 .hand::after{
   background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.5;
 }
 .hero .lede{margin:clamp(1.4rem,3vh,2rem) auto 0;max-width:39rem}
-.hero-tag{display:flex;justify-content:flex-end;max-width:52rem;margin:1.5rem auto 0}
-.forms{margin-top:2.4rem}
-.hero-tag+.forms{margin-top:1.25rem}
 @media(max-width:760px){
   .hero-head{flex-direction:column;gap:clamp(1.1rem,3vh,1.7rem)}
   .hero-head h1{text-align:center}
-  .hero-tag{justify-content:center;margin-top:1.3rem;max-width:none}
 }
-.wl{display:flex;gap:.55rem;justify-content:center;flex-wrap:wrap;max-width:29rem;margin:0 auto}
-.wl input{
-  flex:1 1 15rem;min-width:0;font:inherit;font-size:.94rem;color:var(--navy);
-  background:#fff;border:1px solid var(--line-strong);border-radius:10px;
-  padding:.72rem .95rem;box-shadow:var(--shadow-sm);
-  transition:border-color .2s ease,box-shadow .2s ease;
-}
-.wl input::placeholder{color:var(--dim)}
-.wl input:hover{border-color:rgba(11,20,64,.3)}
-.wl input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(40,70,196,.14)}
-.wl-note{margin-top:.95rem;font-size:.84rem;color:var(--dim)}
-.wl-ok{
-  display:none;margin:0 auto;max-width:29rem;text-align:center;
-  border:1px solid rgba(40,70,196,.34);background:rgba(40,70,196,.06);
-  border-radius:10px;padding:.85rem 1rem;font-size:.94rem;color:var(--accent);
-}
-.is-sent .wl,.is-sent .wl-note{display:none}
-.is-sent .wl-ok{display:block}
 
 /* ---------- hero art ---------- */
 .art{position:relative;z-index:1;margin:clamp(3rem,7vh,5rem) auto 0;max-width:940px}
@@ -294,33 +272,6 @@ h1 .hand::after{
 .fine{margin-top:2rem;font-size:.85rem;color:var(--dim);max-width:44rem}
 .fine b{color:var(--muted);font-weight:550}
 
-/* ---------- closing ---------- */
-/* Two columns: the line on the left, the signup on the right. The .wl rules are
-   shared with the hero, where the form is centred — so everything here overrides
-   inside .close only, and the media query hands it all back for the stacked case. */
-.close-in{
-  display:flex;align-items:center;flex-wrap:wrap;
-  gap:clamp(1.8rem,5vw,4rem);
-}
-.close-copy{flex:1 1 19rem;min-width:0}
-.close h2{margin:0;max-width:15ch}
-.close-form{flex:1 1 25rem;min-width:0;max-width:32rem}
-.close .forms{margin-top:0}
-.close .wl{margin:0;max-width:none;justify-content:flex-start}
-.close .wl input{flex:1 1 11rem}
-.close .wl-note{text-align:left}
-.close .wl-ok{margin:0;max-width:none;text-align:left}
-
-@media(max-width:820px){
-  .close-in{display:block;text-align:center}
-  .close h2{max-width:22rem;margin:0 auto}
-  .close .forms{margin-top:2.2rem}
-  .close .wl{justify-content:center;max-width:29rem;margin:0 auto}
-  .close .wl input{flex:1 1 15rem}
-  .close .wl-note{text-align:center}
-  .close .wl-ok{margin:0 auto;max-width:29rem;text-align:center}
-}
-
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-size:.875rem;background:var(--paper-2)}
 .foot{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;align-items:center}
@@ -343,7 +294,6 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#features">Features</a>
       <a href="#pricing">Pricing</a>
-      <a class="btn btn-ghost" href="#waitlist">Early access</a>
     </div>
   </div>
 </header>
@@ -368,36 +318,11 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
         <h1>Your handwriting,<br><span class="hand">linked</span>.</h1>
       </div>
 
-      <p class="lede">Obsilide is a handwriting-first notebook for Android. Circle a word you wrote,
-        and it becomes a link to a new note.</p>
+      <p class="lede">Obsilide is Obsidian, but for handwriting. <br> Circle a word you wrote,
+        and link it to a new note!</p>
 
-      <div class="hero-tag">
-
-        <span class="pill"><span class="dot" aria-hidden="true"></span> In development · Android first</span>
-      </div>
-
-      <div class="forms" id="waitlist">
-        <!--
-          WAITLIST FORM — live, posting to Formspree (form id mqpzjjbe).
-          Both this and the closing form share one endpoint; the hidden "source" field
-          says which one converted. "_gotcha" is Formspree's honeypot: bots fill it,
-          humans can't see it, and those submissions are discarded without using quota.
-          Swapping the action back to REPLACE_WITH_FORM_ENDPOINT restores the mailto fallback.
-        -->
-        <form class="wl" id="wl-form" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
-          <label class="sr" for="wl-email">Email address</label>
-          <input type="hidden" name="source" value="hero">
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input id="wl-email" type="email" name="email" required autocomplete="email"
-                 placeholder="you@example.com" aria-describedby="wl-note">
-          <button class="btn btn-primary" type="submit">
-            Get early access
-            <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-          </button>
-        </form>
-        <p class="wl-note" id="wl-note">One email when the first build is ready. No list, no noise.</p>
-        <p class="wl-ok" id="wl-ok" role="status">You’re on the list. Talk soon.</p>
-      </div>
+        
+      <span class="pill"><span class="dot" aria-hidden="true"></span>Android · local-first · no account</span>
     </div>
 
     <!-- illustration, not a screenshot -->
@@ -507,7 +432,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   </section>
 
   <!-- ============ FEATURES ============ -->
-  <section class="band" id="features" style="padding-top:0">
+  <section class="band" id="features">
     <div class="wrap">
       <div class="narrow rv">
         <p class="eyebrow">Built for the pen</p>
@@ -593,7 +518,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   <div class="wrap"><div class="rule"></div></div>
 
   <!-- ============ PRICING ============ -->
-  <!-- <section class="band" id="pricing">
+  <section class="band" id="pricing">
     <div class="wrap">
       <div class="narrow rv">
         <p class="eyebrow">Pricing</p>
@@ -613,59 +538,29 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Extending canvas, zoom, reading mode</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Plain files on your device</li>
           </ul>
-          <a class="btn btn-ghost" href="#waitlist">Get early access</a>
         </div>
 
         <div class="tier lift">
-          <span class="tier-tag">Early price</span>
+          <span class="tier-tag">One-time</span>
           <p class="tier-name">Premium</p>
           <p class="price"><b>$15</b><span>one-time</span></p>
-          <p class="tier-sub">Back an indie developer and unlock notebook covers. More local Premium features may be added later.</p>
+          <p class="tier-sub">Unlock notebook covers. More local Premium features may be added later.</p>
           <ul>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Free</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Eight notebook cover styles<span class="soon">in development</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Eight notebook cover styles</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Offline access after one license activation</li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>More local Premium features may be added later</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No subscription or recurring fee</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Hosted AI, sync, and storage are not included</li>
           </ul>
-          <a class="btn btn-primary" href="#waitlist">Join the Premium waitlist</a>
         </div>
 
       </div>
 
-    </div>
-  </section> -->
-
-
-
-  
-
-  <!-- ============ CLOSE ============ -->
-  <section class="band close">
-    <div class="wrap">
-      <div class="close-in rv">
-        <div class="close-copy">
-          <h2>Get notified for the first build.</h2>
-        </div>
-        <div class="close-form">
-          <div class="forms">
-            <form class="wl" id="wl-form-2" action="https://formspree.io/f/mqpzjjbe" method="POST" novalidate>
-              <input type="hidden" name="source" value="footer">
-              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <label class="sr" for="wl-email-2">Email address</label>
-              <input id="wl-email-2" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
-              <button class="btn btn-primary" type="submit">
-                Get early access
-                <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-              </button>
-            </form>
-            <p class="wl-note">Android first. We'll email you when it’s ready.</p>
-            <p class="wl-ok" role="status">You’re on the list. Talk soon.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
+
+
+
 </main>
 
 <footer>
@@ -673,8 +568,8 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
     <span>© <span id="yr">2026</span> Obsilide</span>
     <nav>
       <a href="privacy-policy/">Privacy</a>
-      <a href="mailto:support@obsilide.com">Contact</a>
-      <a href="#waitlist">Early access</a>
+      <a href="terms/">Terms &amp; refunds</a>
+      <a href="mailto:support@obsilide.com">support@obsilide.com</a>
     </nav>
   </div>
 </footer>
@@ -682,8 +577,6 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
 <script>
 (function(){
   "use strict";
-  var CONTACT = "support@obsilide.com";        /* swap if you'd rather collect elsewhere */
-  var PLACEHOLDER = "REPLACE_WITH_FORM_ENDPOINT";
 
   /* nav hairline on scroll */
   var nav = document.getElementById("nav");
@@ -706,46 +599,6 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
     items.forEach(function(el){ io.observe(el); });
   }
 
-  /* waitlist: post to the configured endpoint, or fall back to a pre-filled email */
-  Array.prototype.forEach.call(document.querySelectorAll(".wl"), function(form){
-    form.addEventListener("submit", function(ev){
-      var input = form.querySelector("input[type=email]");
-      var email = (input.value || "").trim();
-      if (!email || email.indexOf("@") < 1 || !input.checkValidity()) {
-        ev.preventDefault(); input.focus(); return;
-      }
-      var endpoint = form.getAttribute("action") || "";
-      var done = function(){ form.closest(".forms").classList.add("is-sent"); };
-
-      /* no endpoint configured yet → open the user's mail client instead */
-      if (!endpoint || endpoint === PLACEHOLDER) {
-        ev.preventDefault();
-        window.location.href = "mailto:" + CONTACT +
-          "?subject=" + encodeURIComponent("Obsilide early access") +
-          "&body=" + encodeURIComponent("Add me to the list: " + email);
-        done();
-        return;
-      }
-
-      /* endpoint configured → submit in place */
-      ev.preventDefault();
-      var btn = form.querySelector("button");
-      var label = btn.innerHTML;
-      btn.disabled = true; btn.textContent = "Sending…";
-      fetch(endpoint, {
-        method: "POST",
-        headers: {"Accept":"application/json"},
-        body: new FormData(form)
-      }).then(function(r){
-        if (!r.ok) throw new Error("bad status " + r.status);
-        done();
-      }).catch(function(){
-        /* let the browser do a plain POST rather than swallowing the signup */
-        btn.disabled = false; btn.innerHTML = label;
-        form.submit();
-      });
-    });
-  });
 })();
 </script>
 </body>

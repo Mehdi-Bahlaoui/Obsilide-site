@@ -48,7 +48,9 @@
     </div>
 
     <h2>2. Information Stored on Your Device</h2>
-    <p>Obsilide saves everything in Android's app-private storage. This includes:</p>
+    <p>By default, Obsilide saves everything in Android's app-private storage. You may instead
+    choose a storage folder through Android's system folder picker. Obsilide then copies and
+    verifies the existing notebook files before switching to that folder. This includes:</p>
     <ul>
       <li>Your notes — a Markdown file per note holding its title and links, and an ink
         sidecar holding your strokes</li>
@@ -60,8 +62,9 @@
         installation ID. The license key itself is <strong>not</strong> stored after activation.</li>
     </ul>
     <p><strong>Local only:</strong> none of this is sent to the developer or to any third
-    party. Nobody but you and the apps you grant access to can read that folder, and it is
-    deleted when you uninstall Obsilide or clear its storage.</p>
+    party. App-private files are deleted when you uninstall Obsilide or clear its storage.
+    Files in a custom folder remain under your control and may be readable by other apps to
+    which you grant access.</p>
     <p>Android's own backup feature is left on, as it is for most apps. If your device backs
     itself up to your personal Google account, your notes may be included in that backup.
     That copy is governed by your device and cloud provider, not by the developer, and you can
@@ -122,12 +125,6 @@
     The site is served by GitHub Pages, which processes ordinary request logs (including IP
     addresses) as its infrastructure provider. Choosing to buy Premium sends you to Creem's
     checkout, which is subject to their policy rather than this one.</p>
-    <p>If you join the early-access list, the only thing collected is the email address you
-    type, used only to tell you when a build is ready. The form is processed by
-    <a href="https://formspree.io/legal/privacy-policy">Formspree</a>, which stores that
-    address until the announcement is sent. The list is never sold or shared, and it is
-    deleted once the build has shipped. Write to the address below at any time to be removed
-    sooner.</p>
 
     <h2>7. If This Ever Changes</h2>
     <p>Features on the roadmap — syncing across devices, publishing a notebook to the web —
@@ -155,7 +152,8 @@
     <span>© <span id="yr">2026</span> Obsilide</span>
     <nav>
       <a href="../index.html">Home</a>
-      <a href="mailto:support@obsilide.com">Contact</a>
+      <a href="../terms/index.html">Terms &amp; refunds</a>
+      <a href="mailto:support@obsilide.com">support@obsilide.com</a>
     </nav>
   </div>
 </footer>
