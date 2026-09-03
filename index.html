@@ -151,6 +151,40 @@ h3{font-size:1.06rem;letter-spacing:-.02em;line-height:1.35}
 @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.965)}to{opacity:1;transform:none}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
+.hero-cta{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;
+  margin:2rem 0 0;
+}
+.hero-cta .btn{padding:.82rem 1.35rem;font-size:.98rem}
+.hero-note{margin:.95rem 0 0;font-size:.85rem;color:var(--dim)}
+
+/* ---------- demo ---------- */
+.demo-frame{
+  position:relative;width:100%;aspect-ratio:16/9;margin-top:2.6rem;
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  background:var(--paper-3);box-shadow:var(--shadow-md);
+  overflow:hidden;
+}
+.demo-frame img,.demo-frame iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
+}
+.demo-frame img{object-fit:cover}
+.demo-play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;padding:0;border:0;background:rgba(11,20,64,.24);
+  cursor:pointer;transition:background .2s ease;
+}
+.demo-play:hover{background:rgba(11,20,64,.34)}
+.demo-play span{
+  display:flex;align-items:center;justify-content:center;
+  width:74px;height:74px;border-radius:50%;
+  background:#fff;color:var(--navy);
+  box-shadow:0 18px 40px -18px rgba(11,20,64,.7);
+  transition:transform .18s ease;
+}
+.demo-play:hover span{transform:scale(1.07)}
+.demo-play svg{width:26px;height:26px;margin-left:4px;fill:currentColor}
+
 .pill{
   display:inline-flex;align-items:center;gap:.5rem;
   padding:.36rem .8rem .36rem .62rem;margin:1.5rem 0 0;
@@ -264,6 +298,8 @@ h1 .hand::after{
 .tier li{display:flex;gap:.6rem;font-size:.9rem;color:var(--muted);line-height:1.5}
 .tier li svg{flex:none;width:15px;height:15px;margin-top:.3rem;stroke:var(--accent);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .tier .btn{margin-top:auto;justify-content:center;width:100%}
+.tier-fine{margin-top:.85rem;font-size:.78rem;color:var(--dim);line-height:1.5;text-align:center}
+.tier-fine a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .soon{
   display:inline-block;margin-left:.35rem;font-size:.68rem;font-weight:600;letter-spacing:.05em;
   text-transform:uppercase;color:var(--dim);border:1px solid var(--line-strong);
@@ -294,6 +330,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#features">Features</a>
       <a href="#pricing">Pricing</a>
+      <a href="download/">Download</a>
     </div>
   </div>
 </header>
@@ -318,10 +355,15 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
         <h1>Your handwriting,<br><span class="hand">linked</span>.</h1>
       </div>
 
-      <p class="lede">Obsilide is Obsidian, but for handwriting. <br> Circle a word you wrote,
-        and link it to a new note!</p>
+      <p class="lede">A handwriting notebook for Android. Write a page with your pen, circle any
+        word you wrote, and that ink becomes a link straight through to another note.</p>
 
-        
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="download/">Download for Android<span class="arw" aria-hidden="true">&#8594;</span></a>
+        <a class="btn btn-ghost" href="#demo" data-demo-link>Watch it work</a>
+      </div>
+      <p class="hero-note">Free, no account, no sign-up. Android 10 or newer.</p>
+
       <span class="pill"><span class="dot" aria-hidden="true"></span>Android · local-first · no account</span>
     </div>
 
@@ -401,6 +443,30 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
 
   <div class="wrap"><div class="rule"></div></div>
 
+  <!-- ============ DEMO ============ -->
+  <section class="band" id="demo">
+    <div class="wrap">
+      <div class="narrow rv">
+        <p class="eyebrow">See it</p>
+        <h2>Two minutes, one page.</h2>
+        <p class="lede" style="margin-top:1.2rem">Writing a page, circling a phrase, turning it
+          into a link, and tapping through to the note on the other side.</p>
+      </div>
+
+      <div class="rv">
+        <div class="demo-frame" id="demo-frame" data-video="rrtxxJ2DYSs">
+          <img src="assets/demo-poster.jpg" width="1280" height="720" loading="lazy" decoding="async"
+               alt="Obsilide on an Android tablet: a handwritten page with one circled phrase highlighted as a link.">
+          <button class="demo-play" type="button" id="demo-play" aria-label="Play the Obsilide demo video">
+            <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
   <!-- ============ HOW ============ -->
   <section class="band" id="how">
     <div class="wrap">
@@ -409,6 +475,8 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
         <h2>Typing files things away.<br>Handwriting is where you think.</h2>
         <p class="lede" style="margin-top:1.3rem">So Obsilide doesn’t ask you to type your notes back out to make them
           useful. The link lives on the ink itself — the strokes stay exactly as you drew them.</p>
+        <p class="lede" style="margin-top:1rem">If you already keep a linked set of notes in
+          something like Obsidian, this is the same idea, drawn instead of typed.</p>
       </div>
 
       <div class="steps rv">
@@ -538,6 +606,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Extending canvas, zoom, reading mode</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Plain files on your device</li>
           </ul>
+          <a class="btn btn-ghost tier-cta" href="download/">Download for Android</a>
         </div>
 
         <div class="tier lift">
@@ -552,6 +621,11 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No subscription or recurring fee</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Hosted AI, sync, and storage are not included</li>
           </ul>
+          <!-- TO PUBLISH: replace with the live Creem checkout for the $15 product,
+               https://www.creem.io/payment/<live prod_ id>. Never the test checkout. -->
+          <a class="btn btn-primary tier-cta" href="https://www.creem.io/payment/prod_1NC7v0cNfgoNCjLyJo0B6f">Buy Premium &#8212; $15</a>
+          <p class="tier-fine">One payment, billed by Creem. 14-day refund — see
+            <a href="terms/">terms &amp; refunds</a>.</p>
         </div>
 
       </div>
@@ -567,6 +641,7 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   <div class="wrap foot">
     <span>© <span id="yr">2026</span> Obsilide</span>
     <nav>
+      <a href="download/">Download</a>
       <a href="privacy-policy/">Privacy</a>
       <a href="terms/">Terms &amp; refunds</a>
       <a href="mailto:support@obsilide.com">support@obsilide.com</a>
@@ -585,6 +660,38 @@ footer{border-top:1px solid var(--line);padding:2.6rem 0;color:var(--dim);font-s
   window.addEventListener("scroll", onScroll, {passive:true});
 
   document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* Demo video: load the YouTube iframe only once the visitor asks for it, so the
+     page itself still makes zero third-party requests. youtube-nocookie.com. */
+  var demo = document.getElementById("demo-frame");
+  var play = document.getElementById("demo-play");
+  var demoSection = document.getElementById("demo");
+  var videoId = demo ? demo.getAttribute("data-video") : "";
+  if (demoSection && (!videoId || videoId === "rrtxxJ2DYSs")) {
+    /* No video published yet: drop the section and its separator rather than render an
+       empty frame. Publishing the real id is all it takes to bring it back. */
+    var sep = demoSection.nextElementSibling;
+    if (sep && sep.querySelector(".rule")) { sep.parentNode.removeChild(sep); }
+    demoSection.parentNode.removeChild(demoSection);
+    Array.prototype.forEach.call(document.querySelectorAll("[data-demo-link]"), function(a){
+      a.parentNode.removeChild(a);
+    });
+    demo = null;
+  }
+  if (demo && play) {
+    play.addEventListener("click", function(){
+      var id = demo.getAttribute("data-video");
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) +
+              "?autoplay=1&rel=0&modestbranding=1";
+      f.title = "Obsilide demo";
+      f.allow = "accelerometer; autoplay; encrypted-media; picture-in-picture";
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      f.setAttribute("allowfullscreen", "");
+      demo.textContent = "";
+      demo.appendChild(f);
+    });
+  }
 
   /* reveal on scroll */
   var items = document.querySelectorAll(".rv");

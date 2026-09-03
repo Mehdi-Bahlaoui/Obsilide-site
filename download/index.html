@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download Obsilide for Android</title>
+<meta name="description" content="Download Obsilide, a handwriting notebook for Android. Free, no account, no sign-up. Android 10 or newer.">
+<link rel="canonical" href="https://obsilide.com/download/">
+<meta name="theme-color" content="#fdfdfe">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://obsilide.com/download/">
+<meta property="og:site_name" content="Obsilide">
+<meta property="og:title" content="Download Obsilide for Android">
+<meta property="og:description" content="A handwriting notebook for Android. Free, no account, no sign-up.">
+<meta property="og:image" content="https://obsilide.com/assets/og.jpg">
+<link rel="stylesheet" href="../assets/page.css">
+<style>
+/* Download-specific; the shared sheet stays general on purpose. */
+.dl-meta{list-style:none;padding:0;margin:1.6rem 0 0;display:grid;gap:.55rem;
+  border-top:1px solid var(--line);padding-top:1.4rem}
+.dl-meta li{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;font-size:.9rem}
+.dl-meta dfn{font-style:normal;font-weight:550;color:var(--navy);min-width:9.5rem}
+.dl-meta code{word-break:break-all}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">Obsilide</a>
+    <a class="back" href="../index.html">&#8592; Home</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Download</p>
+    <h1>Obsilide for Android</h1>
+    <p class="sub">Version 1.0 &middot; Android 10 or newer &middot; pen or stylus recommended</p>
+
+    <div class="callout">
+      <p><strong>The notebook is free.</strong> No account, no sign-up, and no payment to
+      install or use it. Your notes are written as plain files on your own device.</p>
+    </div>
+
+    <p>Obsilide is a handwriting notebook. You write a page with your pen, circle any word you
+    wrote, and that ink becomes a link straight through to another note &mdash; so the notes you
+    draw end up connected the way a set of typed, linked notes would be.</p>
+
+    <!-- TO PUBLISH: create the GitHub release below with exactly this tag and file
+         name so this link resolves, then fill in the real size and SHA-256.
+           gh release create v1.0 app/build/outputs/apk/release/Obsilide-1.0.apk \
+             --repo Mehdi-Bahlaoui/Obsilide-site --title "Obsilide 1.0"
+         Size:   ls -lh on the signed APK
+         Digest: sha256sum on the signed APK -->
+    <div class="btn-row">
+      <a class="btn btn-primary"
+         href="https://github.com/Mehdi-Bahlaoui/Obsilide-site/releases/download/v1.0/Obsilide-1.0.apk">
+        Download the APK<span class="arw" aria-hidden="true">&#8595;</span></a>
+      <a class="btn btn-ghost" href="../index.html#demo">Watch it work</a>
+    </div>
+
+    <ul class="dl-meta">
+      <li><dfn>Version</dfn> 1.0</li>
+      <li><dfn>File</dfn> <code>Obsilide-1.0.apk</code></li>
+      <li><dfn>Size</dfn> 35.5 MB</li>
+      <li><dfn>Requires</dfn> Android 10 (API 29) or newer</li>
+      <li><dfn>Permissions</dfn> Internet only, and only to activate a Premium licence</li>
+      <li><dfn>SHA-256</dfn> <code>58a24bbaf663d3096196a9714c643ebbc390439d5d17131820dcce80190b5689</code></li>
+    </ul>
+
+    <h2>Installing it</h2>
+    <p>Obsilide is distributed directly from this site rather than through the Play Store, so
+    Android will ask for permission once before it installs.</p>
+    <ul>
+      <li>Open the downloaded <code>.apk</code> file, from your notification shade or the
+      Downloads app.</li>
+      <li>When Android asks whether to allow installs from this source, allow it. You are
+      granting that to the browser you downloaded with, and you can revoke it afterwards under
+      <strong>Settings &rarr; Apps &rarr; Special access &rarr; Install unknown apps</strong>.</li>
+      <li>Play Protect may show a notice because the app was not installed from the Play Store.
+      Choosing <strong>Install anyway</strong> is expected here.</li>
+      <li>To be certain the file is the one published here, check it before installing:
+      <code>sha256sum Obsilide-1.0.apk</code> should print the digest listed above.</li>
+    </ul>
+
+    <h2>Premium</h2>
+    <p>Everything in the notebook works without paying. Obsilide Premium is an optional
+    <strong>$15 one-time</strong> purchase that unlocks eight notebook cover styles; it is not a
+    subscription. You can <a href="../index.html#pricing">buy it here</a>, and the licence key
+    arrives by email. Paste the key into <strong>Settings &rarr; Premium &rarr; Activate
+    license</strong> in the app, once &mdash; after that Premium works offline.</p>
+    <p>Payment is handled by Creem as merchant of record. Refunds are available within 14 days;
+    the <a href="../terms/index.html">terms &amp; refund policy</a> has the details.</p>
+
+    <h2>Questions</h2>
+    <p>Email <a href="mailto:support@obsilide.com">support@obsilide.com</a> &mdash; support
+    requests are answered within three business days.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; <span id="yr">2026</span> Obsilide</span>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../privacy-policy/index.html">Privacy</a>
+      <a href="../terms/index.html">Terms &amp; refunds</a>
+      <a href="mailto:support@obsilide.com">support@obsilide.com</a>
+    </nav>
+  </div>
+</footer>
+
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>
