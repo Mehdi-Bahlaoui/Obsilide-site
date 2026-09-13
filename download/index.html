@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Download Obsilide for Android</title>
-<meta name="description" content="Download Obsilide, a handwriting notebook for Android. Free, no account, no sign-up. Android 10 or newer.">
+<meta name="description" content="Download Obsilide, a handwriting notebook for Android. Free, no account required. Android 10 or newer.">
 <link rel="canonical" href="https://obsilide.com/download/">
 <meta name="theme-color" content="#fdfdfe">
 <link rel="icon" href="../favicon.png" type="image/png">
@@ -24,6 +24,15 @@
 .dl-meta li{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;font-size:.9rem}
 .dl-meta dfn{font-style:normal;font-weight:550;color:var(--navy);min-width:9.5rem}
 .dl-meta code{word-break:break-all}
+.download-form{margin:2rem 0 0;padding:1.25rem 1.35rem;border:1px solid var(--line);
+  border-radius:12px;background:var(--paper-2)}
+.download-fields{display:grid;gap:.8rem}
+.download-form label{display:grid;gap:.3rem;color:var(--navy);font-size:.86rem;font-weight:550}
+.download-form input{width:100%;padding:.68rem .75rem;border:1px solid var(--line-strong);border-radius:8px;
+  background:var(--paper);color:var(--navy);font:inherit;font-size:.95rem}
+.download-form .btn{margin-top:.2rem;justify-self:start}
+.download-note,.download-status{font-size:.78rem;line-height:1.45;margin:.7rem 0 0;color:var(--dim)}
+.download-status{color:var(--navy);font-weight:550}
 </style>
 </head>
 <body>
@@ -39,37 +48,47 @@
   <div class="wrap">
     <p class="eyebrow">Download</p>
     <h1>Obsilide for Android</h1>
-    <p class="sub">Version 1.0 &middot; Android 10 or newer &middot; pen or stylus recommended</p>
+    <p class="sub">Version 1.1</p>
 
-    <div class="callout">
-      <p><strong>The notebook is free.</strong> No account, no sign-up, and no payment to
-      install or use it. Your notes are written as plain files on your own device.</p>
-    </div>
 
-    <p>Obsilide is a handwriting notebook. You write a page with your pen, circle any word you
-    wrote, and that ink becomes a link straight through to another note &mdash; so the notes you
-    draw end up connected the way a set of typed, linked notes would be.</p>
+    <p>Obsilide is a handwriting notebook. You write a page with your stylus, circle any word you
+    wrote, and that ink becomes a link straight through to another note.
+    Your notes are written as plain files and saved locally on your own device.</p>
 
     <!-- TO PUBLISH: create the GitHub release below with exactly this tag and file
          name so this link resolves, then fill in the real size and SHA-256.
-           gh release create v1.0 app/build/outputs/apk/release/Obsilide-1.0.apk \
-             --repo Mehdi-Bahlaoui/Obsilide-site --title "Obsilide 1.0"
+           gh release create v1.1 app/build/outputs/apk/release/app-release.apk#Obsilide-1.1.apk \
+             --repo Mehdi-Bahlaoui/Obsilide-site --title "Obsilide 1.1"
          Size:   ls -lh on the signed APK
          Digest: sha256sum on the signed APK -->
-    <div class="btn-row">
-      <a class="btn btn-primary"
-         href="https://github.com/Mehdi-Bahlaoui/Obsilide-site/releases/download/v1.0/Obsilide-1.0.apk">
-        Download the APK<span class="arw" aria-hidden="true">&#8595;</span></a>
+    <form id="download-form" class="download-form" action="https://formspree.io/f/mqpzjjbe" method="POST">
+      <div id="download-fields" class="download-fields">
+        <label for="download-name">Name
+          <input id="download-name" name="name" type="text" autocomplete="name" required>
+        </label>
+        <label for="download-email">Email
+          <input id="download-email" name="email" type="email" autocomplete="email" required>
+        </label>
+        <input type="hidden" name="_subject" value="Obsilide APK download">
+        <input type="hidden" name="_next" value="https://github.com/Mehdi-Bahlaoui/Obsilide-site/releases/download/v1.1/Obsilide-1.1.apk">
+        <button class="btn btn-primary" type="submit">
+          Download the APK<span class="arw" aria-hidden="true">&#8595;</span></button>
+        <p class="download-note">Your email will only be used to inform you about new app updates and features.</p>
+      </div>
+      <p id="download-status" class="download-status" role="status" hidden>
+        Thanks for your interest. Your download will start shortly.</p>
+    </form>
+    <!-- <div class="btn-row">
       <a class="btn btn-ghost" href="../index.html#demo">Watch it work</a>
-    </div>
+    </div> -->
 
     <ul class="dl-meta">
-      <li><dfn>Version</dfn> 1.0</li>
-      <li><dfn>File</dfn> <code>Obsilide-1.0.apk</code></li>
-      <li><dfn>Size</dfn> 35.5 MB</li>
+      <li><dfn>Version</dfn> 1.1</li>
+      <li><dfn>File</dfn> <code>Obsilide-1.1.apk</code></li>
+      <li><dfn>Size</dfn> 35.8 MB</li>
       <li><dfn>Requires</dfn> Android 10 (API 29) or newer</li>
       <li><dfn>Permissions</dfn> Internet only, and only to activate a Premium licence</li>
-      <li><dfn>SHA-256</dfn> <code>58a24bbaf663d3096196a9714c643ebbc390439d5d17131820dcce80190b5689</code></li>
+      <li><dfn>SHA-256</dfn> <code>37b404c5c41928f6f7882cdaec1074fe331eebe657a8da527d772c13868e911a</code></li>
     </ul>
 
     <h2>Installing it</h2>
@@ -83,8 +102,14 @@
       <strong>Settings &rarr; Apps &rarr; Special access &rarr; Install unknown apps</strong>.</li>
       <li>Play Protect may show a notice because the app was not installed from the Play Store.
       Choosing <strong>Install anyway</strong> is expected here.</li>
-      <li>To be certain the file is the one published here, check it before installing:
-      <code>sha256sum Obsilide-1.0.apk</code> should print the digest listed above.</li>
+
+    </ul>
+
+    <h2>Verification (Optional)</h2>
+    <ul>
+      <li>To check the integrity of the downloaded file, run the following command in a terminal app or a computer:
+      <code>sha256sum Obsilide-1.1.apk</code><br>
+      The output should match the SHA-256 digest listed above.</li>
     </ul>
 
     <h2>Premium</h2>
@@ -114,6 +139,36 @@
   </div>
 </footer>
 
-<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  const downloadForm = document.getElementById("download-form");
+  const downloadFields = document.getElementById("download-fields");
+  const downloadStatus = document.getElementById("download-status");
+  const apkUrl = "https://github.com/Mehdi-Bahlaoui/Obsilide-site/releases/download/v1.1/Obsilide-1.1.apk";
+
+  downloadForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = downloadForm.querySelector("button");
+    button.disabled = true;
+    button.textContent = "Preparing download…";
+
+    try {
+      const response = await fetch(downloadForm.action, {
+        method: "POST",
+        body: new FormData(downloadForm),
+        headers: { Accept: "application/json" },
+      });
+      if (!response.ok) throw new Error("Form submission failed");
+      downloadFields.hidden = true;
+      downloadStatus.hidden = false;
+      window.setTimeout(() => { window.location.href = apkUrl; }, 1200);
+    } catch {
+      button.disabled = false;
+      button.innerHTML = 'Download the APK<span class="arw" aria-hidden="true">&#8595;</span>';
+      downloadStatus.textContent = "We could not submit the form. Please try again.";
+      downloadStatus.hidden = false;
+    }
+  });
+</script>
 </body>
 </html>
